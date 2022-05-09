@@ -6,7 +6,7 @@ export default function App() {
   return (
     <>
       <Switch>
-        <Route>
+        <Route path="/">
           <Header />
           <FilmList />
         </Route>
