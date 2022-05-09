@@ -46,7 +46,7 @@ header img {
   align-items: center;
 }
 
-.container {
+.list {
   /* background-color: azure; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
