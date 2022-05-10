@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import styles from '../App.css';
 
 export default function FilmDetail() {
   const [film, setFilm] = useState({});
@@ -20,26 +21,32 @@ export default function FilmDetail() {
 
   return (
     <>
-      <Link to="/">
-        <button>Back to Film List</button>
-      </Link>
-      <hr />
-      {loading ? (
-        <p>Loading film...</p>
-      ) : (
-        <>
-          <section>
-            <h2>
-              {film.title} <br />
-              {film.original_title}
-            </h2>
-            <p>Director: {film.director}</p>
-            <p>Producer: {film.producer}</p>
-            <p>Story Summary: {film.description}</p>
-            <img src={film.image} alt="film-image" />
-          </section>
-        </>
-      )}
+      <div className={styles.detail}>
+        <Link to="/">
+          <button>Back to All Films</button>
+        </Link>
+        <hr />
+        {loading ? (
+          <p>Loading film...</p>
+        ) : (
+          <>
+            <section className={styles.card}>
+              <div>
+                <h2>
+                  {film.title} <br />
+                  {film.original_title}
+                </h2>
+                <p>Director: {film.director}</p>
+                <p>Producer: {film.producer}</p>
+                <p>Story Summary: {film.description}</p>
+              </div>
+              <div>
+                <img src={film.image} alt="film-image" />
+              </div>
+            </section>
+          </>
+        )}
+      </div>
     </>
   );
 }
