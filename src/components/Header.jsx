@@ -1,6 +1,7 @@
-import React from 'react';
+import { useState } from 'react';
 import headerImage from '../assets/studio-ghibli.png';
 import styles from '../App.css';
+import { ghibliFilmsFetch } from '../services/ghibliApi-fetch';
 
 export default function Header() {
   return (

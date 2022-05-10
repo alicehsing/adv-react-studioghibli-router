@@ -20,39 +20,32 @@ header {
   padding: 0px 5px;
 }
 
-/* header a:hover {
-  background-color: rgb(130, 122, 122);
-  color: black;
-} */
-
 header img {
-  background-color: aquamarine;
   width: 350px;
   height: 135px;
   background-color: #f1f1f1;
   margin: 0;
-}
-
-.header_img {
   position: fixed;
   left: 10px;
   top: 0px;
 }
 
-.box {
+.search {
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: sticky;
+  top: 150px;
 }
 
 .list {
-  /* background-color: azure; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1.5fr 1fr 1fr;
   gap: 15px 10px;
-  margin-top: 200px;
+  margin-top: 50px;
 }
 
 .film {

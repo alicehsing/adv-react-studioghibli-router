@@ -6,18 +6,48 @@ import styles from '../App.css';
 export default function FilmList() {
   const [loading, setLoading] = useState(true);
   const [films, setFilms] = useState([]);
+  const location = useLocation();
+  const history = useHistory();
+  const search = new URLSearchParams(location.search).get('search');
+  const [results, setResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const filmList = isSearching ? results : films;
 
-  // useEffect to fetch StudioGhibli API, create an object with the info I want to access to
+  // search/filter functionality
+  const handleSearch = (event) => {
+    history.push(`/?search=${event.target.value}`);
+    const searchResults = films.filter((item) => {
+      return item.title.toLowerCase().includes(search.toLowerCase().trim());
+    });
+
+    setResults(searchResults);
+    setIsSearching(true); //if search.length is truthy
+  };
+
+  // useEffect to fetch StudioGhibli API on load
   useEffect(() => {
-    setLoading(true);
     const getFilmData = async () => {
-      const ghibliFilmData = await ghibliFilmsFetch();
-      console.log('ALL DATA', ghibliFilmData);
-      setFilms(ghibliFilmData);
+      setLoading(true);
+      const filmData = await ghibliFilmsFetch();
+      setFilms(filmData);
       setLoading(false);
     };
     getFilmData();
   }, []);
+
+  // useEffect that checks whether there is a search or not
+  useEffect(() => {
+    const getFilmData = async () => {
+      setLoading(true);
+      const filmData = await ghibliFilmsFetch();
+      setFilms(filmData);
+      setLoading(false);
+      if (!search.length) {
+        setIsSearching(false);
+      }
+    };
+    getFilmData();
+  }, [location.search]);
 
   return (
     <>
@@ -25,22 +55,29 @@ export default function FilmList() {
         <p>Loading Films...</p>
       ) : (
         <>
-          <div className={styles.box}>
-            <h1>Film List</h1>
-            <div className={styles.list}>
-              {films.map((film) => {
-                return (
-                  <section key={film.id} className={styles.film}>
-                    <Link to={`/films/${film.id}`}>
-                      <h3>{film.title}</h3>
-                      <h3>{film.originalTitle}</h3>
-                      <img src={film.image} alt="film-image" />
-                    </Link>
-                  </section>
-                );
-              })}
-            </div>
+          <div className={styles.search}>
+            <input
+              id="search"
+              type="text"
+              value={search}
+              placeholder="Search film by title"
+              onChange={handleSearch}
+            />
           </div>
+          <div className={styles.list}>
+            {filmList.map((film) => {
+              return (
+                <section key={film.id} className={styles.film}>
+                  <Link to={`/films/${film.id}`}>
+                    <h3>{film.title}</h3>
+                    <h3>{film.originalTitle}</h3>
+                    <img src={film.image} alt="film-image" />
+                  </Link>
+                </section>
+              );
+            })}
+          </div>
+          {isSearching && !results.length && <p>No Results</p>}
         </>
       )}
     </>
