@@ -31,7 +31,8 @@ header img {
 }
 
 .search {
-  margin-top: 150px;
+  margin-top: 135px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,12 +41,19 @@ header img {
   top: 150px;
 }
 
+.search input {
+  height: 40px;
+  width: 200px;
+  border-radius: 10px;
+  font-size: larger;
+}
+
 .list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 15px 10px;
-  margin-top: 50px;
+  margin-top: 40px 50px;
 }
 
 .film {
