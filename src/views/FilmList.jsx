@@ -42,7 +42,7 @@ export default function FilmList() {
       const filmData = await ghibliFilmsFetch();
       setFilms(filmData);
       setLoading(false);
-      if (!search.length) {
+      if (!search) {
         setIsSearching(false);
       }
     };
@@ -58,7 +58,7 @@ export default function FilmList() {
           <div className={styles.search}>
             <input
               id="search"
-              type="text"
+              type="textbox"
               value={search}
               placeholder="Search film by title"
               onChange={handleSearch}

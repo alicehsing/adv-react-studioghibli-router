@@ -12,7 +12,6 @@ export default function FilmDetail() {
     const fetchEachFilm = async () => {
       const res = await fetch(`https://ghibliapi.herokuapp.com/films/${id}`);
       const filmData = await res.json();
-      console.log('FILM DATA', filmData);
       setFilm(filmData);
       setLoading(false);
     };
@@ -41,7 +40,7 @@ export default function FilmDetail() {
                 <p>Story Summary: {film.description}</p>
               </div>
               <div>
-                <img src={film.image} alt="film-image" />
+                <img src={film.image} alt={`${film.title}`} />
               </div>
             </section>
           </>
