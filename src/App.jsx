@@ -1,5 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
-import Header from './components/header';
+import Header from './components/Header';
 import FilmDetail from './views/FilmDetail';
 import FilmList from './views/FilmList';
 

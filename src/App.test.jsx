@@ -6,7 +6,6 @@ import {
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
-import FilmDetail from './views/FilmDetail';
 
 describe('<App />', () => {
   it('component test - renders a header consisted of a heading element and an image', async () => {
