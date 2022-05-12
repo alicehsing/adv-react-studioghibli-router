@@ -8,26 +8,28 @@ export default function FilmList() {
   const [films, setFilms] = useState([]);
   const location = useLocation();
   const history = useHistory();
-  const search = new URLSearchParams(location.search).get('search');
+  const [search, setSearch] = useState(
+    new URLSearchParams(location.search).get('search') || ''
+  );
   const [results, setResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const filmList = isSearching ? results : films;
 
   // search/filter functionality
   const handleSearch = (event) => {
+    setSearch(event.target.value);
     history.push(`/?search=${event.target.value}`);
     const searchResults = films.filter((item) => {
       return item.title.toLowerCase().includes(search.toLowerCase().trim());
     });
-
     setResults(searchResults);
     setIsSearching(true); //if search.length is truthy
   };
 
   // useEffect to fetch StudioGhibli API on load
   useEffect(() => {
+    setLoading(true);
     const getFilmData = async () => {
-      setLoading(true);
       const filmData = await ghibliFilmsFetch();
       setFilms(filmData);
       setLoading(false);
@@ -37,8 +39,8 @@ export default function FilmList() {
 
   // useEffect that checks whether there is a search or not
   useEffect(() => {
+    setLoading(true);
     const getFilmData = async () => {
-      setLoading(true);
       const filmData = await ghibliFilmsFetch();
       setFilms(filmData);
       setLoading(false);

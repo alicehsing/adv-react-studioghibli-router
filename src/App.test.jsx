@@ -1,6 +1,7 @@
 import {
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -23,7 +24,7 @@ describe('<App />', () => {
 
   it('behavioral test - renders a list of clickable films by Studio Ghibli, on click, navigates to the film detail page', async () => {
     render(
-      <MemoryRouter initialEntries={['/']} initialIndex={1}>
+      <MemoryRouter initialEntries={['/', '/films/:id']} initialIndex={0}>
         <App />
       </MemoryRouter>
     );
@@ -59,12 +60,50 @@ describe('<App />', () => {
     screen.getByText(/loading films/i);
     await waitForElementToBeRemoved(await screen.findByText(/loading films/i));
 
-    const searchBar = await screen.findByRole('textbox', 'My Neighbor Totoro');
-    userEvent.type(searchBar);
-    // expect(await screen.findByRole('textbox')).toHaveValue(
-    //   'My Neighbor Totoro'
-    // );
+    screen.getByRole('textbox');
+
+    const onLoadImage = await screen.findAllByAltText('film-image');
+    expect(onLoadImage).toHaveLength(22);
+
+    const searchBar = screen.getByRole('textbox');
+    userEvent.type(searchBar, 'My Neighbor Totoro');
+
+    // waitFor(() => {
+    //   userEvent.type(searchBar, 't');
+    //   userEvent.type(searchBar, 'o');
+    //   userEvent.type(searchBar, 't');
+    // });
+
+    // await waitFor(() => {
+    //   const result = screen.getAllByAltText('film-image');
+    //   expect(result).toHaveLength(1);
+    // });
 
     await screen.findByRole('heading', { name: /my neighbor totoro/i });
+  });
+
+  it('behavioral test - renders detail view', async () => {
+    render(
+      <MemoryRouter
+        initialEntries={['/films/58611129-2dbc-4a81-a72f-77ddfc1b1b49']}
+      >
+        <App />
+      </MemoryRouter>
+    );
+
+    screen.getByText(/loading film/i);
+    await waitForElementToBeRemoved(await screen.findByText(/loading film/i));
+
+    const onLoadImage = await screen.findAllByAltText('My Neighbor Totoro');
+    expect(onLoadImage).toHaveLength(1);
+
+    const backButton = screen.getByRole('button', {
+      name: /Back to All Films/i,
+    });
+    expect(backButton).toHaveClass('back');
+    userEvent.click(backButton);
+
+    const onLoadImages = await screen.findAllByAltText('film-image');
+    expect(onLoadImages).toHaveLength(22);
   });
 });

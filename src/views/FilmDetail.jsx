@@ -22,7 +22,7 @@ export default function FilmDetail() {
     <>
       <div className={styles.detail}>
         <Link to="/">
-          <button>Back to All Films</button>
+          <button className={styles.back}>Back to All Films</button>
         </Link>
         <hr />
         {loading ? (
